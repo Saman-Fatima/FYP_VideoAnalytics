@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>FlaskBlog</title>
+    <p> Tagline!</p>
+</head>
+<style>
+    img{
+        border: 1px solid black;
+    }
+    h1 {
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        background: black;
+        font-family:times new roman;
+    }
+
+    div1 {
+        float:left;
+        background-color: honeydew;
+        width: 190;
+        height:180;
+        padding: 25px 50px 50px 50px; /*top right bottom left*/
+        margin: 10px;
+        border:double palegreen;
+        color:darkslateblue;
+        font-family:Arial;
+    }
+    div2 {
+        float:right;
+        background-color: azure;
+        width: 200;
+        height:160;
+        border:double orchid;
+        padding: 25px 25px 10px 25px;
+        margin: 10px;
+        color:darkslateblue;
+        font-family:Arial;
+    }
+    div3{
+        float:left;
+        background-color: #EF9A9A;
+        width: 250;
+        height:100;
+        border:#ffebee;
+        padding: 25px 50px 50px 50px;
+        margin: 10px;
+        color:#ffebee;
+        font-family:Arial;
+    }
+    div4{
+        float:right;
+        background-color: #F7DC6F;
+        width: 250;
+        height:100;
+        border:#ffebee;
+        padding: 25px 25px 25px 25px;
+        margin: 10px;
+        color:darkslateblue;
+        font-family:Arial;
+    }
+    div5 {
+        float:left;
+        background-color: #501f3a;  /* #c39bd3  */
+        width: 210;
+        height:140;
+        padding: 25px 50px 50px 50px; /*top right bottom left*/
+        margin: 10px;
+        color:white;
+        font-family:Arial;
+    }
+    div7 {
+        float:left;
+        background-color:antiquewhite ; /*#14a098*/
+        padding: 25px 25px 5px 25px; /*top right bottom left*/
+        margin:5px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        grid-gap: 5;
+
+    }
+    .grid-container > div {
+        text-align: center;
+
+        font-size: 18;
+    }
+
+    .item1 {
+
+        background-color: #cccccc;
+    }
+    .item2{
+
+        padding: 0;
+    }
+    .button {
+        display:block;
+        /* Green */
+        border: 1px solid white;
+
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+
+        margin: 1px 2px;
+        cursor: pointer;
+    }
+    .button1
+    {padding: 10px 60px 10px 60px;
+        font-size: 20px;
+
+        width:100%;
+        background-color: black;
+
+    }
+    .button2
+    {padding: 4px 17px;
+        background-color: black;
+        float:right;
+    }
+    nav{
+        background-color: lightpink;
+    }
+</style>
+<body>
+<! div2 is for camera, div3 is peak time, div4=heatmap, div5=gender-->
+
+
+</nav>
+<div>
+    <h1>Video Analytics</h1>
+</div>
+<div class="grid-container">
+    <div class="item1">
+        <div>
+            <br/>
+            <br/>
+            <button class="button button1">Home</button></div>
+        <div><button class="button button1">About Us!</button></div>
+
+    </div>
+    <div class="item2">
+        <div6>
+            <div1>
+                <h2>Visiting</h2>
+                <table border=2>
+
+                    <tr>
+                        <th>No. of customers</th>
+                        <th>Time</th>
+                    </tr>
+                    <tr>
+                        <td> {{myresult}}</td>
+                        <td>{{pinn}}</td>
+                    </tr>
+
+                </table>
+            </div1>
+            <div7>
+                <!-- bar chart canvas element -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+                <canvas id="myChart" width="600" height="400"></canvas>
+
+                <script>
+                    Chart.defaults.global.responsive = false;
+
+                    // define the chart data
+                    var chartData = {
+                        labels : [{% for item in labels %}
+                    "{{item}}",
+                    {% endfor %}],
+                    datasets : [{
+                        label: '{{ legend }}',
+                        fill: true,
+                        lineTension: 0.1,
+                        backgroundColor: "rgba(108,52,131,1)",  //can put border to 0.4 etc
+                        borderColor: "rgba(108,52,131,1)",
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: "rgba(108,52,131,1)",
+                        pointBackgroundColor: "#17202a",
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(108,52,131,1)",
+                        pointHoverBorderColor: "rgba(220,220,220,1)",
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 1,
+                        pointHitRadius: 10,
+                        data : [{% for item in values %}
+                        {{item}},
+                    {% endfor %}],
+                    spanGaps: false
+                    }]
+                    }
+
+                    // get chart canvas
+                    var ctx = document.getElementById("myChart").getContext("2d");
+
+                    // create the chart using the chart canvas
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: chartData,
+                    });
+                </script>
+            </div7>
+            <div3><h2>Peak Time</h2>
+                <table border=2>
+
+                    <tr>
+                        <th>Customers</th>
+                        <th>Time</th>
+                    </tr>
+                    <tr>
+                        <td> {{peak}}</td>
+                        <td>{{peakt}}</td>
+                    </tr>
+
+                </table>
+            </div3>
+            <div5>
+                <h2> Gender</h2>
+                <table border=1 >
+                    <style>
+                        th{
+                            padding:5px;
+                        }
+                    </style>
+                    <tr>
+                        <th>Males</th>
+                        <th>Females</th>
+                    </tr>
+                    <tr>
+                        <td> {{myresultGender}}</td>
+                        <td>{{pinnG}}</td>
+                    </tr>
+
+                </table>
+            </div5>
+        </div6>
+        <br/>
+
+        <div4>
+            <h2>Heatmap</h2>
+            <img src="{{user_image}}" alt="heatmap" width="400" height="200" >
+            <p>{{myr}}</p>
+
+        </div4>
+        <div2>
+            <h2>Camera</h2>
+
+
+            <div>
+
+                <video id="video1" controls="" width="320" height="280" loop="" autoplay="">
+                    <source src="{{url_for('static', filename='yike.mp4')}}"  type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="button button2" onclick="makeBig()">Theatre mode</button>
+
+            <br><br>
+        </div2>
+
+
+        <br/>
+        <br/>
+
+
+        <!--<div4>
+            <h2>Total Customers</h2>
+            <p>{{rowss}}</p>
+            <img src="people.png">
+            <form action='cgi-bin/hello2.py' method='get'>
+           <label for="myname">Enter Your Name</label>
+           <input id="myname" type="text" name="firstname" value="Nada" />
+           <input type="submit">
+       </form>
+        </div4>-->
+
+    </div>
+</div>
+
+
+<script>
+    var myVideo = document.getElementById("video1");
+
+    function playPause() {
+        if (myVideo.paused)
+            myVideo.play();
+        else
+            myVideo.pause();
+    }
+
+    function makeBig() {
+        myVideo.width = 560;
+    }
+
+    function makeSmall() {
+        myVideo.width = 320;
+    }
+
+    function makeNormal() {
+        myVideo.width = 420;
+    }
+</script>
+</body>
+</html>
